@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Wallet UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-black flex justify-center items-center min-h-screen">
+    <!-- Main container to simulate a phone screen -->
+    <div class="w-full max-w-sm mx-auto bg-[#1C1C1E] text-white rounded-[44px] shadow-lg overflow-hidden h-[844px] flex flex-col">
+
+        <!-- Header -->
+        <header class="px-4 pt-12 pb-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <img class="w-10 h-10 rounded-full" src="https://placehold.co/40x40/7C3AED/FFFFFF?text=A" alt="User Avatar">
+                    <div>
+                        <p class="text-sm text-zinc-400">@RuggedFlask5577</p>
+                        <h1 id="account-name" class="text-base font-medium cursor-pointer hover:opacity-80 transition-opacity">Account 4</h1>
+                    </div>
+                </div>
+                <div class="flex items-center gap-5">
+                    <!-- Scan Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
+                    <!-- Search Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow px-4 overflow-y-auto no-scrollbar">
+            <!-- Balance Section -->
+            <div id="balance-container" class="text-center my-6">
+                <p id="balance-amount" class="text-5xl font-semibold tracking-tight">$0.18</p>
+                <p id="balance-change" class="text-green-500 text-base font-normal mt-2">+$0.00585029 +3.40%</p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="grid grid-cols-4 gap-4 my-8">
+                <div class="text-center">
+                    <button class="bg-[#2C2C2E] w-14 h-14 rounded-2xl flex items-center justify-center mx-auto">
+                        <!-- Receive Icon -->
+                        <svg width="24" height="24" viewBox="0 0 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 3H4C3.44772 3 3 3.44772 3 4V10C3 10.5523 3.44772 11 4 11H10C10.5523 11 11 10.5523 11 10V4C11 3.44772 10.5523 3 10 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 3H14C13.4477 3 13 3.44772 13 4V10C13 10.5523 13.4477 11 14 11H20C20.5523 11 21 10.5523 21 10V4C21 3.44772 20.5523 3 20 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 13H4C3.44772 13 3 13.4477 3 14V20C3 20.5523 3.44772 21 4 21H10C10.5523 21 11 20.5523 11 20V14C11 13.4477 10.5523 13 10 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 13H14C13.4477 13 13 13.4477 13 14V20C13 20.5523 13.4477 21 14 21H20C20.5523 21 21 20.5523 21 20V14C21 13.4477 20.5523 13 20 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <span class="text-xs mt-2 block font-medium">Receive</span>
+                </div>
+                <div class="text-center">
+                    <button id="send-button" class="bg-[#2C2C2E] w-14 h-14 rounded-2xl flex items-center justify-center mx-auto">
+                        <!-- Send Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                    <span class="text-xs mt-2 block font-medium">Send</span>
+                </div>
+                <div class="text-center">
+                    <button class="bg-[#2C2C2E] w-14 h-14 rounded-2xl flex items-center justify-center mx-auto">
+                        <!-- Swap Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+                    </button>
+                    <span class="text-xs mt-2 block font-medium">Trade</span>
+                </div>
+                <div class="text-center">
+                    <button class="bg-[#2C2C2E] w-14 h-14 rounded-2xl flex items-center justify-center mx-auto">
+                        <!-- Buy Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="4" y2="20"/><path d="M16.5 7.5c0-1.5-3-2.5-4.5-2.5s-4.5 1-4.5 2.5C7.5 9 10 10 12 10s4.5-1 4.5-2.5"/><path d="M7.5 16.5c0 1.5 3 2.5 4.5 2.5s4.5-1 4.5-2.5c0-1.5-3-2.5-4.5-2.5s-4.5 1-4.5 2.5"/></svg>
+                    </button>
+                    <span class="text-xs mt-2 block font-medium">Buy</span>
+                </div>
+            </div>
+
+            <!-- Perps Section -->
+            <div class="my-6">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-xl font-bold">Perps</h2>
+                    <a href="#" class="text-blue-500 text-sm font-semibold">Manage</a>
+                </div>
+                <div class="bg-[#2C2C2E] rounded-2xl p-4 flex items-center gap-4">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwLjQ3NzIgMTQuODM3OEMxOC4xMjc0IDE0LjgzNzggMTYuMjA0MSAxNi4xNDEgMTYuMjA0MSAxOC40MzQ4VjE4LjQzNDhDMTYuMjA0MSAyMC43Mjg2IDE4LjEyNzQgMjIuNDIyMyAyMC40NzcyIDIyLjQyMjNIMjguOTY1N0MyOS44MDI0IDIyLjQyMjMgMzAuNDg0MSAyMS43NTggMzAuNDg0MSAyMC45MzE4VjIwLjkzMThDMzAuNDg0MSAyMC4xMDU3IDI5LjgwMjQgMTkuNDQxNCAyOC45NjU3IDE5LjQ0MTRIMjAuNDc3MkMyMS4zMTM5IDE5LjQ0MTQgMjEuOTk1NyAxOC43Nzc4IDIxLjk5NTcgMTcuOTUxN1YxNy45NTE3QzIxLjk5NTcgMTcuMTI1NiAyMS4zMTM5IDE2LjQ2MTQgMjAuNDc3MiAxNi4xNjE0SDEyLjgyMzdDMTIuMDM5OCAxNi4xNjE0IDExLjM5NDUgMTcuMDkzIDExLjM5NDUgMTcuODU3MVYxNy44NTcxQzExLjM5NDUgMTguNjIxMiAxMi4wMzk4IDE5LjI3NDkgMTIuODIzNyAxOS4yNzQ5SDE0LjM4NjQiIHN0cm9rZT0iIzFBRjc3MiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjAuNDc3MiAyNS4xNjIyQzIyLjgyNzEgMjULjE2MjIgMjQuNzUwNSAyMy44NTkgMjQuNzUwNSAyMS41NjUyVjIxLjU2NTJDMjQuNzUwNSAxOS4yNzE0IDIyLjgyNzEgMTcuNTc3NyAyMC40NzcyIDE3LjU3NzdIMTEuOTg0M0MxMS4xNDc2IDE3LjU3NzcgMTAuNDY1OSAxOC4yNDIgMTAuNDY1OSAxOS4wNjgxVjE5LjA2ODFDMTAuNDY1OSAxOS44OTQzIDExLjE0NzYgMjAuNTU4NiAxMS45ODQzIDIwLjU1ODZIMjAuNDc3MkMxOS42NDA1IDIwLjU1ODYgMTguOTU0MiAyMS4yMjIgMTguOTU0MiAyMi4wNDgxVjIyLjA0ODFDMTE4Ljk1NDIgMjIuODc0MyAxOS42NDA1IDIzLjUzODYgMjAuNDc3MiAyMy41Mzg2SDI4LjEzNjNDMjkuMDAwMiAyMy41Mzg2IDI5LjU1NTYgMjIuOTY3IDI5LjU1NTYgMjIuMjMxOVYyMi4yMzE5QzI5LjU1NTYgMjEuNDc4MiAyOS4wMDAyIDIwLjkyNTYgMjguMTM2MyAyMC45MjU2SDI2LjU3MzYiIHN0cm9rZT0iI0ZGN0UwMCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Perps Icon" class="w-10 h-10">
+                    <div>
+                        <p class="font-normal text-[15px] leading-snug">Use perps to trade on an asset's future price with leverage</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tokens Section -->
+            <div class="mt-8">
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-6">
+                       <button class="py-3 text-white font-semibold">Tokens</button>
+                       <button class="py-3 text-zinc-400 font-medium">Collectibles</button>
+                    </div>
+                    <button class="text-zinc-500">
+                        <!-- More Options Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                    </button>
+                </div>
+
+                <!-- Token List -->
+                <div class="space-y-1 mt-4">
+
+                    <div id="edit-bitcoin" class="flex justify-between items-center py-2 px-1 rounded-lg hover:bg-zinc-800 transition-colors duration-200 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=023" class="w-10 h-10" alt="Bitcoin Logo">
+                            <div>
+                                <p class="font-medium text-base">Bitcoin</p>
+                                <p id="btc-holding-native" class="text-sm text-zinc-500">...</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p id="btc-holding-usd" class="font-medium text-base">...</p>
+                        </div>
+                    </div>
+
+                    <div id="edit-ethereum" class="flex justify-between items-center py-2 px-1 rounded-lg hover:bg-zinc-800 transition-colors duration-200 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <img src="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=023" class="w-10 h-10" alt="Ethereum Logo">
+                            <div>
+                                <p class="font-medium text-base">Ethereum</p>
+                                <p id="eth-holding-native" class="text-sm text-zinc-500">...</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                           <p id="eth-holding-usd" class="font-medium text-base">...</p>
+                        </div>
+                    </div>
+                    
+                    <div id="edit-weth" class="flex justify-between items-center py-2 px-1 rounded-lg hover:bg-zinc-800 transition-colors duration-200 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <img src="https://cryptologos.cc/logos/wrapped-ethereum-weth-logo.svg?v=032" class="w-10 h-10" alt="Wrapped Ethereum Logo">
+                            <div>
+                                <p class="font-medium text-base">Ethereum</p>
+                                <p id="weth-holding-native" class="text-sm text-zinc-500">...</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                           <p id="weth-holding-usd" class="font-medium text-base">...</p>
+                        </div>
+                    </div>
+
+                    <div id="edit-polygon" class="flex justify-between items-center py-2 px-1 rounded-lg hover:bg-zinc-800 transition-colors duration-200 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <img src="https://cryptologos.cc/logos/polygon-matic-logo.svg?v=023" class="w-10 h-10" alt="Polygon Logo">
+                            <div>
+                                <p class="font-medium text-base">Polygon</p>
+                                <p id="polygon-holding-native" class="text-sm text-zinc-500">...</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p id="polygon-holding-usd" class="font-medium text-base">...</p>
+                        </div>
+                    </div>
+
+                    <div id="edit-solana" class="flex justify-between items-center py-2 px-1 rounded-lg hover:bg-zinc-800 transition-colors duration-200 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=023" class="w-10 h-10" alt="Solana Logo">
+                            <div>
+                                <p class="font-medium text-base">Solana</p>
+                                <p id="sol-holding-native" class="text-sm text-zinc-500">...</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p id="sol-holding-usd" class="font-medium text-base">...</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bg-[#1C1C1E] border-t border-zinc-800 px-4 py-3 mt-auto">
+            <div class="flex justify-around items-center h-16">
+                <!-- Home Icon (Active) -->
+                <button class="text-violet-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </button>
+                <!-- Swap/Arrows Icon -->
+                <button class="text-zinc-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+                </button>
+                <!-- History/Clock Icon -->
+                <button class="text-zinc-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </button>
+                <!-- Search Icon -->
+                <button class="text-zinc-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Modals -->
+    <!-- Edit Name Modal -->
+    <div id="edit-name-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center p-4 z-10">
+        <div class="bg-[#2C2C2E] rounded-2xl p-6 w-full max-w-sm">
+            <h2 class="text-lg font-bold mb-4">Change Wallet Name</h2>
+            <input id="new-name-input" type="text" class="bg-zinc-800 border border-zinc-700 rounded-lg w-full p-2 mb-4 text-white" placeholder="Enter new name">
+            <div class="flex justify-end gap-3">
+                <button id="cancel-name-button" class="bg-zinc-700 hover:bg-zinc-600 text-white font-bold py-2 px-4 rounded-lg">Cancel</button>
+                <button id="save-name-button" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Holdings Modal -->
+    <div id="edit-holdings-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center p-4 z-10">
+        <div class="bg-[#2C2C2E] rounded-2xl p-6 w-full max-w-sm">
+            <h2 id="edit-holdings-title" class="text-lg font-bold mb-4">Edit Holdings</h2>
+            <input id="new-holdings-input" type="number" step="any" class="bg-zinc-800 border border-zinc-700 rounded-lg w-full p-2 mb-4 text-white" placeholder="Enter amount">
+            <div class="flex justify-end gap-3">
+                <button id="cancel-holdings-button" class="bg-zinc-700 hover:bg-zinc-600 text-white font-bold py-2 px-4 rounded-lg">Cancel</button>
+                <button id="save-holdings-button" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send Funds Modal -->
+    <div id="send-funds-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center p-4 z-10">
+        <div class="bg-[#2C2C2E] rounded-2xl p-6 w-full max-w-sm">
+            <h2 class="text-lg font-bold mb-4">Send Solana</h2>
+            <div class="mb-4">
+                <label for="send-address-input" class="text-sm text-zinc-400">Recipient Address</label>
+                <input id="send-address-input" type="text" class="bg-zinc-800 border border-zinc-700 rounded-lg w-full p-2 mt-1 text-white" placeholder="Enter SOL address">
+            </div>
+            <div class="mb-4">
+                <label for="send-amount-input" class="text-sm text-zinc-400">Amount (USD)</label>
+                <input id="send-amount-input" type="number" step="any" class="bg-zinc-800 border border-zinc-700 rounded-lg w-full p-2 mt-1 text-white" placeholder="0.00">
+                 <p id="send-error" class="text-red-500 text-xs mt-1 hidden">Amount exceeds balance.</p>
+            </div>
+            <div class="flex justify-end gap-3">
+                <button id="cancel-send-button" class="bg-zinc-700 hover:bg-zinc-600 text-white font-bold py-2 px-4 rounded-lg">Cancel</button>
+                <button id="confirm-send-button" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg">Send</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- STATE MANAGEMENT ---
+        let wallet = {
+            name: 'Account 4',
+            holdings: {
+                bitcoin: { amount: 0, symbol: 'BTC' },
+                ethereum: { amount: 0, symbol: 'ETH' },
+                weth: { amount: 0, symbol: 'ETH' },
+                polygon: { amount: 0, symbol: 'POL' },
+                solana: { amount: 0, symbol: 'SOL' }
+            }
+        };
+
+        function saveWalletState() {
+            localStorage.setItem('cryptoWallet', JSON.stringify(wallet));
+        }
+
+        function loadWalletState() {
+            const savedState = localStorage.getItem('cryptoWallet');
+            if (savedState) {
+                wallet = JSON.parse(savedState);
+            }
+            // Ensure all coins are present in holdings after loading
+            const allCoins = ['bitcoin', 'ethereum', 'weth', 'polygon', 'solana'];
+            allCoins.forEach(coin => {
+                if (!wallet.holdings[coin]) {
+                     wallet.holdings[coin] = { amount: 0, symbol: coin.toUpperCase() };
+                     if (coin === 'weth') wallet.holdings[coin].symbol = 'ETH';
+                     if (coin === 'polygon') wallet.holdings[coin].symbol = 'POL';
+                }
+            });
+
+            updateUI();
+        }
+
+        // --- UI ELEMENTS ---
+        const accountNameEl = document.getElementById('account-name');
+        const balanceAmountEl = document.getElementById('balance-amount');
+        const balanceChangeEl = document.getElementById('balance-change');
+        
+        // --- TOKEN HOLDING ELEMENTS ---
+        const holdingElements = {
+             bitcoin: {
+                usd: document.getElementById('btc-holding-usd'),
+                native: document.getElementById('btc-holding-native'),
+                button: document.getElementById('edit-bitcoin')
+            },
+            ethereum: {
+                usd: document.getElementById('eth-holding-usd'),
+                native: document.getElementById('eth-holding-native'),
+                button: document.getElementById('edit-ethereum')
+            },
+             weth: {
+                usd: document.getElementById('weth-holding-usd'),
+                native: document.getElementById('weth-holding-native'),
+                button: document.getElementById('edit-weth')
+            },
+            polygon: {
+                usd: document.getElementById('polygon-holding-usd'),
+                native: document.getElementById('polygon-holding-native'),
+                button: document.getElementById('edit-polygon')
+            },
+            solana: {
+                usd: document.getElementById('sol-holding-usd'),
+                native: document.getElementById('sol-holding-native'),
+                button: document.getElementById('edit-solana')
+            }
+        };
+
+        // --- MODAL ELEMENTS (EDIT NAME) ---
+        const editNameModal = document.getElementById('edit-name-modal');
+        const newNameInput = document.getElementById('new-name-input');
+        const saveNameButton = document.getElementById('save-name-button');
+        const cancelNameButton = document.getElementById('cancel-name-button');
+
+        // --- MODAL ELEMENTS (EDIT HOLDINGS) ---
+        const editHoldingsModal = document.getElementById('edit-holdings-modal');
+        const editHoldingsTitle = document.getElementById('edit-holdings-title');
+        const newHoldingsInput = document.getElementById('new-holdings-input');
+        const saveHoldingsButton = document.getElementById('save-holdings-button');
+        const cancelHoldingsButton = document.getElementById('cancel-holdings-button');
+        let currentlyEditingCoin = null;
+
+        // --- MODAL ELEMENTS (SEND FUNDS) ---
+        const sendButton = document.getElementById('send-button');
+        const sendFundsModal = document.getElementById('send-funds-modal');
+        const sendAmountInput = document.getElementById('send-amount-input');
+        const confirmSendButton = document.getElementById('confirm-send-button');
+        const cancelSendButton = document.getElementById('cancel-send-button');
+        const sendError = document.getElementById('send-error');
+
+
+        // --- UI UPDATE FUNCTION ---
+        function updateUI() {
+            accountNameEl.textContent = wallet.name;
+            
+            if (!livePrices) {
+                balanceChangeEl.textContent = 'Loading price data...';
+                for (const coinId in holdingElements) {
+                    holdingElements[coinId].usd.textContent = '...';
+                    holdingElements[coinId].native.textContent = '...';
+                }
+                return;
+            }
+
+            let totalBalanceUSD = 0;
+            let totalPreviousBalanceUSD = 0;
+
+            // Calculate values for each holding
+            for (const coinId in wallet.holdings) {
+                const holding = wallet.holdings[coinId];
+                const priceData = livePrices[coinId];
+                
+                if (priceData && holdingElements[coinId]) {
+                    const usdValue = holding.amount * priceData.usd;
+                    totalBalanceUSD += usdValue;
+
+                    // Update the token list UI
+                    holdingElements[coinId].usd.textContent = `$${usdValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    holdingElements[coinId].native.textContent = `${holding.amount.toLocaleString('en-US', {maximumFractionDigits: 6})} ${holding.symbol}`;
+
+                    // For calculating total change
+                    const changeDecimal = priceData.usd_24h_change / 100;
+                    const previousValue = (1 + changeDecimal) > 0 ? usdValue / (1 + changeDecimal) : usdValue;
+                    totalPreviousBalanceUSD += previousValue;
+                }
+            }
+            
+            // Update Total Balance UI
+            balanceAmountEl.textContent = `$${totalBalanceUSD.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+            // Update Total Balance Change UI
+            const dollarChange = totalBalanceUSD - totalPreviousBalanceUSD;
+            const percentChange = totalPreviousBalanceUSD > 0 ? (dollarChange / totalPreviousBalanceUSD) * 100 : 0;
+            const changeSign = dollarChange >= 0 ? '+' : '';
+            balanceChangeEl.textContent = `${changeSign}$${dollarChange.toFixed(7)} ${changeSign}${percentChange.toFixed(2)}%`;
+
+            if (dollarChange >= 0) {
+                balanceChangeEl.classList.remove('text-red-500');
+                balanceChangeEl.classList.add('text-green-500');
+            } else {
+                balanceChangeEl.classList.remove('text-green-500');
+                balanceChangeEl.classList.add('text-red-500');
+            }
+        }
+
+        // --- LIVE CRYPTO PRICE TRACKER ---
+        let livePrices = null;
+        
+        async function fetchCryptoPrices() {
+            const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,wrapped-ethereum,matic-network,solana&vs_currencies=usd&include_24hr_change=true';
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                // Map API IDs to our wallet IDs
+                livePrices = {
+                    bitcoin: data.bitcoin,
+                    ethereum: data.ethereum,
+                    weth: data['wrapped-ethereum'],
+                    polygon: data['matic-network'],
+                    solana: data.solana
+                };
+                updateUI(); // Refresh main balance display with new price data
+
+            } catch (error) {
+                console.error("Could not fetch crypto prices:", error);
+                 for (const key in holdingElements) {
+                    holdingElements[key].usd.textContent = 'Error';
+                }
+            }
+        }
+
+        // --- EVENT LISTENERS (EDIT NAME) ---
+        accountNameEl.addEventListener('click', () => {
+            newNameInput.value = wallet.name;
+            editNameModal.classList.remove('hidden');
+        });
+
+        cancelNameButton.addEventListener('click', () => editNameModal.classList.add('hidden'));
+
+        saveNameButton.addEventListener('click', () => {
+            const newName = newNameInput.value.trim();
+            if (newName) {
+                wallet.name = newName;
+                saveWalletState();
+                updateUI();
+                editNameModal.classList.add('hidden');
+            }
+        });
+
+        // --- EVENT LISTENERS (EDIT HOLDINGS) ---
+        function openEditHoldingsModal(coinId) {
+            currentlyEditingCoin = coinId;
+            let coinName = coinId.charAt(0).toUpperCase() + coinId.slice(1);
+            if (coinId === 'weth') coinName = 'Wrapped Ethereum';
+            editHoldingsTitle.textContent = `Edit ${coinName} Holdings`;
+            newHoldingsInput.value = wallet.holdings[coinId].amount;
+            editHoldingsModal.classList.remove('hidden');
+        }
+        
+        for (const coinId in holdingElements) {
+            holdingElements[coinId].button.addEventListener('click', () => openEditHoldingsModal(coinId));
+        }
+
+        cancelHoldingsButton.addEventListener('click', () => editHoldingsModal.classList.add('hidden'));
+
+        saveHoldingsButton.addEventListener('click', () => {
+            if (!currentlyEditingCoin) return;
+
+            const newAmount = parseFloat(newHoldingsInput.value);
+            if (!isNaN(newAmount) && newAmount >= 0) {
+                wallet.holdings[currentlyEditingCoin].amount = newAmount;
+                saveWalletState();
+                updateUI();
+                editHoldingsModal.classList.add('hidden');
+            }
+        });
+        
+        // --- EVENT LISTENERS (SEND FUNDS) ---
+        sendButton.addEventListener('click', () => {
+            sendAmountInput.value = '';
+            sendError.classList.add('hidden');
+            sendFundsModal.classList.remove('hidden');
+        });
+
+        cancelSendButton.addEventListener('click', () => sendFundsModal.classList.add('hidden'));
+
+        confirmSendButton.addEventListener('click', () => {
+            if (!livePrices || !livePrices.solana) return;
+
+            const amountToSendUSD = parseFloat(sendAmountInput.value);
+            if (isNaN(amountToSendUSD) || amountToSendUSD <= 0) return;
+
+            const solanaValueUSD = wallet.holdings.solana.amount * livePrices.solana.usd;
+            if (amountToSendUSD > solanaValueUSD) {
+                sendError.classList.remove('hidden');
+                return;
+            }
+            
+            const amountToSendSOL = amountToSendUSD / livePrices.solana.usd;
+            wallet.holdings.solana.amount -= amountToSendSOL;
+
+            saveWalletState();
+            updateUI();
+            sendFundsModal.classList.add('hidden');
+        });
+        
+        sendAmountInput.addEventListener('input', () => sendError.classList.add('hidden'));
+
+
+        // --- INITIALIZE APP ---
+        loadWalletState(); // Loads user's wallet data
+        fetchCryptoPrices(); // Initial fetch for live prices
+        setInterval(fetchCryptoPrices, 60000); // Refresh prices every 60 seconds
+    });
+</script>
+</body>
+</html>
+
